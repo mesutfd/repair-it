@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-wrapper" style="min-height: 692px; padding: 16px 6px">
+
+
+        <section class="content">
+            <div class="col-md-12">
+            <!-- Widget: user widget style 1 -->
+            <div class="card card-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header text-white" style="background: url('/statics/admin_panel/dist/img/photo1.png') center center;">
+                <h3 class="widget-user-username">الیزابت رفسنجانی</h3>
+                <h5 class="widget-user-desc">طراح وب</h5>
+              </div>
+              <div class="widget-user-image">
+                <img class="img-circle" src="/statics/admin_panel/dist/img/user3-128x128.jpg" alt="User Avatar">
+              </div>
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col-sm-4 border-left">
+                    <div class="description-block">
+                      <h5 class="description-header">۳,۲۰۰</h5>
+                      <span class="description-text">فروش</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4 border-left">
+                    <div class="description-block">
+                      <h5 class="description-header">۱۳,۰۰۰</h5>
+                      <span class="description-text">دنبال کننده</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4">
+                    <div class="description-block">
+                      <h5 class="description-header">۳۵</h5>
+                      <span class="description-text">محصولات</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+            </div>
+            <!-- /.widget-user -->
+          </div>
+            <div class="container-fluid">
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">جدول ریسپانسیو</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                               placeholder="جستجو">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i
+                                                    class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>شماره</th>
+                                        <th>کاربر</th>
+                                        <th>تاریخ</th>
+                                        <th>وضعیت</th>
+                                        <th>دلیل</th>
+                                    </tr>
+
+                                        <tr>
+                                            <td>{{ cars.id }}</td>
+                                            <td>{{ cars.user }}</td>
+                                            <td>{{ cars.deliver_date }}</td>
+                                            <td>{% if cars.is_fixed %}
+                                                <span class="badge badge-success">تعمیر شده</span>
+                                            {% else %}<span class="badge bg-danger">در دست تعمیر</span>
+                                            {% endif %}
+                                            <td>{{ cars.short_description }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div><!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </section>
+    </div>
+{% endblock %}

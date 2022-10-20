@@ -1,0 +1,12 @@
+{% extends 'shared/_layout.html' %}
+
+{% block title %}
+    {% if request.user.is_authenticated %}
+        پنل مدیریت |  {{ request.user }}
+    {% else %}
+        پنل مدیریتی
+    {% endif %}
+{% endblock %}
+{% block admin_panel_aside %}
+        {% include 'includes/admin_panel_aside.html' %}
+{% endblock %}

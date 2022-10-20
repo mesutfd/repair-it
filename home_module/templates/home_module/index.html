@@ -1,0 +1,383 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+
+    <div class="content-wrapper" style="min-height: 692px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>پروفایل</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-left">
+                            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                            {% if request.user.is_authenticated %}
+                                <li class="breadcrumb-item active">پنل مدیریت ابر کاربر | {{ request.user }}</li>
+                            {% else %}
+                                <li class="breadcrumb-item active">برای جزئیات بیشتر <a
+                                        href="{% url 'login_page' %}">لاگین</a>
+                                    شوید
+                                </li>
+                            {% endif %}
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="/statics/admin_panel/dist/img/user4-128x128.jpg"
+                                         alt="User profile picture">
+                                </div>
+
+                                <h3 class="profile-username text-center">{{ request.user }}</h3>
+
+                                <p class="text-muted text-center">مهندس نرم افزار</p>
+
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <b>مجموع سفارشات تعمیر:</b> <br><a class="float-left"  dir="ltr">{{ repairs.count }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>تعمیر شده:</b> <br><a class="float-left"  dir="ltr">{{ repaired.count }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>در دست تعمیر:</b> <br><a class="float-left"  dir="ltr">{{ working.count }}</a>
+                                    </li>
+                                </ul>
+
+                                <a href="{% url 'car-deliver-form-page' %}" class="btn btn-primary btn-block"><b>+ درخواست تعمیر جدید</b></a>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                        <!-- About Me Box -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">درباره من</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <strong><i class="fa fa-book mr-1"></i> تحصیلات</strong>
+
+                                <p class="text-muted">
+                                    لیسانس نرم افزار کامپیوتر
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fa fa-map-marker mr-1"></i> موقعیت</strong>
+
+                                <p class="text-muted">ایران، مازندران</p>
+
+                                <hr>
+
+                                <strong><i class="fa fa-pencil mr-1"></i> مهارت‌ها</strong>
+
+                                <p class="text-muted">
+                                    <span class="badge badge-danger">Django</span>
+                                    <span class="badge badge-success">Coding</span>
+                                    <span class="badge badge-info">Javascript</span>
+                                    <span class="badge badge-warning">Python</span>
+                                    <span class="badge badge-primary">Node.js</span>
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fa fa-file-text-o mr-1"></i> یادداشت</strong>
+
+                                <p class="text-muted">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                    استفاده
+                                    از طراحان گرافیک است.</p>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">سوابق
+                                        درخواست تعمیرات</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'car-deliver-form-page' %}" >+
+                                        درخواست
+                                        جدید</a>
+                                    </li>
+                                </ul>
+                            </div><!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="activity">
+                                        <div class="card">
+                                            <div class="card-header border-transparent">
+                                                <h3 class="card-title">آخرین سفارشات</h3>
+
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-widget="collapse">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-tool" data-widget="remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body p-0">
+                                                <div class="table-responsive">
+                                                    <table class="table m-0">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>شناسه تعمیر</th>
+                                                            <th>نوع خودرو</th>
+                                                            <th>پلاک</th>
+                                                            <th>شماره تماس</th>
+                                                            <th>هزینه تمام شده</th>
+                                                            <th>وضعیت</th>
+                                                            <th>شرح مختصر خرابی</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for repair in repairs %}
+                                                            <tr>
+                                                                <td><a href="#">{{ repair.id }}</a>
+                                                                </td>
+                                                                <td>{{ repair.car_type }}</td>
+                                                                <td dir="rtl">{{ repair.car_number }}</td>
+                                                                <td>{{ repair.user.mobile }}</td>
+                                                                <td>{% if repair.costs_secondary %}{{ repair.costs_secondary }} تومان{% else %}مشخص نشده
+
+                                                                {% endif %} </td>
+                                                                <td>{% if repair.is_fixed %}<span class="badge badge-success">تعمیر شده</span>
+                                                                {% else %}<span class="badge bg-danger">در دست تعمیر</span>
+                                                                {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    <span>{{ repair.short_description }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.table-responsive -->
+                                            </div>
+                                            <!-- /.card-body -->
+                                            <div class="card-footer clearfix">
+                                                {% comment %}<a href="javascript:void(0)" class="btn btn-sm btn-info float-left">سفارش جدید</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">مشاهده همه سفار</a>{% endcomment %}
+                                            </div>
+                                            <!-- /.card-footer -->
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="timeline">
+                                        <!-- The timeline -->
+                                        <ul class="timeline timeline-inverse">
+                                            <!-- timeline time label -->
+                                            <li class="time-label">
+                        <span class="bg-danger">
+                          ۱۰ Feb. ۲۰۱۴
+                        </span>
+                                            </li>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-envelope bg-primary"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> ۱۲:۰۵</span>
+
+                                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
+                                                        email</h3>
+
+                                                    <div class="timeline-body">
+                                                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo
+                                                        kaboodle
+                                                        quora plaxo ideeli hulu weebly balihoo...
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-user bg-info"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> ۵ mins ago</span>
+
+                                                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
+                                                        accepted your friend request
+                                                    </h3>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-comments bg-warning"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> ۲۷ mins ago</span>
+
+                                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on
+                                                        your
+                                                        post</h3>
+
+                                                    <div class="timeline-body">
+                                                        Take me to your leader!
+                                                        Switzerland is small and neutral!
+                                                        We are more like Germany, ambitious and misunderstood!
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a href="#" class="btn btn-warning btn-flat btn-sm">View
+                                                            comment</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline time label -->
+                                            <li class="time-label">
+                        <span class="bg-success">
+                          ۳ Jan. ۲۰۱۴
+                        </span>
+                                            </li>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-camera bg-purple"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> ۲ days ago</span>
+
+                                                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new
+                                                        photos
+                                                    </h3>
+
+                                                    <div class="timeline-body">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <li>
+                                                <i class="fa fa-clock-o bg-gray"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.tab-pane -->
+
+                                    <div class="tab-pane" id="settings">
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="inputName"
+                                                           placeholder="Name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="inputEmail"
+                                                           placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputName2" class="col-sm-2 control-label">Name</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputName2"
+                                                           placeholder="Name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputExperience"
+                                                       class="col-sm-2 control-label">Experience</label>
+
+                                                <div class="col-sm-10">
+                                                <textarea class="form-control" id="inputExperience"
+                                                          placeholder="Experience"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputSkills"
+                                                           placeholder="Skills">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox"> I agree to the <a href="#">terms and
+                                                            conditions</a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-danger">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div><!-- /.card-body -->
+                        </div>
+                        <!-- /.nav-tabs-custom -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <strong>حقوق کپی رایت &copy; 2022 <a href="https://github.com/mesutfd">مسعود نایبی</a>.</strong>
+        <br>
+    <a href="tel:+989373013861">0918-310-1974</a>
+
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-wrapper" style="min-height: 692px;">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.card -->
+
+        <div class="row">
+            <div class="col-md-12" style="padding: 36px">
+
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">قالب آماده ورودی</h3>
+                    </div>
+                    <form action="{% url 'car-deliver-form-page' %}" class="p-3" method="post" dir="rtl">
+                        {% csrf_token %}
+                        <div class="input-group mb-3 select2 select2-hidden-accessible">
+                            {{ repair_form.car_type }}
+                            {% for choice in repair_form.car_type.choices %}
+                                <option value="{{ choice }}"></option>
+
+                            {% endfor %}
+
+                            <div class="input-group-append">
+                                <span class="fa fa-user input-group-text"></span>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" >
+                            {{ repair_form.car_number }}
+                            <div class="input-group-append">
+                                <span class="fa fa-envelope input-group-text"></span>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ repair_form.short_description }}
+                            <div class="input-group-append">
+                                <span class="fa fa-lock input-group-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="checkbox icheck">
+                                    <label class="">
+                                        <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false"
+                                             style="position: relative;"><input type="checkbox"
+                                                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary rounded col-lg-10 btn-block btn-flat">ثبت نام</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
+
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+            <!-- /.col (left) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    </div>
+{% endblock %}
