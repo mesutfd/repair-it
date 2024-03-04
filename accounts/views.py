@@ -1,14 +1,45 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.contrib.auth import login, logout
+from django.http import Http404
+from django.shortcuts import render
+from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.views import View
-from .models import User
-from django.utils.crypto import get_random_string
-from django.http import Http404, HttpRequest
-from django.contrib.auth import login, logout
-from utils.decorators import *
 
 from accounts.forms import RegisterForm, LoginForm, ForgotPasswordForm, ResetPasswordForm
+from utils.decorators import *
+from .models import User
+from ipware import get_client_ip, ip
+
+
+def my_view(request):
+    client_ip = get_client_ip(request)
+
+    return str(client_ip)
+
+
+# def get_client_ip(request):
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#     request.META.get('')
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('REMOTE_ADDR')
+#
+#     with open("logs/logs.txt", 'a') as f:
+#         f.write(f"{ip}\n")
+#     return ip
+#
+# def get_client_ip(request):
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('HTTP_X_REAL_IP', request.META.get('REMOTE_ADDR'))
+#
+#     with open("logs/logs.txt", 'a') as f:
+#         f.write(f"{ip}\n")
+#
+#     return ip
 
 
 @method_decorator(is_login_decorator(), name='dispatch')
@@ -18,7 +49,7 @@ class RegisterView(View):
         context = {
             'register_form': register_form
         }
-
+        print(my_view(request))
         return render(request, 'accounts/register.html', context)
 
     def post(self, request):
@@ -72,7 +103,7 @@ class LoginView(View):
         context = {
             'login_form': login_form
         }
-
+        print(my_view(request))
         return render(request, 'accounts/login.html', context)
 
     def post(self, request: HttpRequest):

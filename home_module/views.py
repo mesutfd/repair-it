@@ -1,10 +1,17 @@
 from django.http import HttpRequest
 from django.shortcuts import render
-from utils.decorators import permission_checker_decorator_factory
-from car_repair_request.models import CarRepairRequest
 
-# Create your views here.
-from django.views.generic import FormView
+from car_repair_request.models import CarRepairRequest
+from utils.decorators import permission_checker_decorator_factory
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 @permission_checker_decorator_factory()
@@ -19,6 +26,9 @@ def index(request: HttpRequest):
         'repaired': repaired,
         'working': working
     }
+    with open("logs/logs.txt", 'a') as f:
+        f.write(f"{get_client_ip(request)}\n")
+
+    print(f"IPLogger: {get_client_ip(request)}")
+
     return render(request, 'home_module/index.html', context)
-
-
